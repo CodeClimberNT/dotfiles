@@ -31,28 +31,34 @@ sudo pacman -S stow git gitleaks
 
 ## First-time setup
 
-From this repo root:
+From repo root:
 
 ```bash
 cd ~/dotfiles
-stow -nv -t "$HOME" shell terminal dev media gaming desktop browser local-bin ssh
 ```
 
-If dry run looks correct:
+### Option A: explicit package list
 
 ```bash
-stow -v -t "$HOME" shell terminal dev media gaming desktop browser local-bin ssh
+stow -nv -t "$HOME" shell terminal dev media gaming desktop browser local-bin ssh
+stow -v  -t "$HOME" shell terminal dev media gaming desktop browser local-bin ssh
+```
+
+### Option B: stow all packages automatically (alternative)
+
+```bash
+stow -nv -t "$HOME" */
+stow -v  -t "$HOME" */
 ```
 
 If conflicts exist (existing real files in `$HOME`), use one-time adopt:
 
 ```bash
-cd ~/dotfiles
-stow -nv --adopt -t "$HOME" shell terminal dev media gaming desktop browser local-bin ssh
-stow -v  --adopt -t "$HOME" shell terminal dev media gaming desktop browser local-bin ssh
+stow -nv --adopt -t "$HOME" */
+stow -v  --adopt -t "$HOME" */
 ```
 
-Then review adopted changes:
+Then review:
 
 ```bash
 git status
@@ -61,25 +67,55 @@ git diff
 
 ## Daily usage
 
-Restow after edits:
+Restow after structure changes (new/moved/renamed files):
 
 ```bash
 cd ~/dotfiles
-stow -R -t "$HOME" shell terminal dev media gaming desktop browser local-bin ssh
+stow -R -t "$HOME" */
 ```
 
-Unstow a package:
+Unstow one package:
 
 ```bash
 cd ~/dotfiles
 stow -D -t "$HOME" shell
 ```
 
+## Editing rules (important)
+
+- **Content edits** (inside existing files): edit either in `$HOME` or in `~/dotfiles` (symlinked).
+- **Structure edits** (add/move/rename/delete files or folders): edit in **`~/dotfiles` first**, then restow.
+
+Why: structure changes made directly in `$HOME` can break expected symlink layout.
+
+### Safe workflow for structure changes
+
+```bash
+cd ~/dotfiles
+
+# 1) move/create/delete inside package folders first
+#    (example: mv dev/.config/ruff media/.config/ruff)
+
+# 2) restow all packages
+stow -R -t "$HOME" */
+
+# 3) verify
+stow -nv -R -t "$HOME" */
+git status
+```
+
+### Moving files between packages (optional safer flow)
+
+```bash
+cd ~/dotfiles
+stow -D -t "$HOME" old-package
+stow -R -t "$HOME" old-package new-package
+stow -nv -R -t "$HOME" */
+```
+
 ## Secrets policy
 
-- Never commit private keys or tokens.
-- Keep secrets in local untracked files (example: `~/.config/zed/secrets.env`).
-- Keep only safe defaults/templates in repo.
+Never commit private keys or tokens.
 
 Suggested `.gitignore` entries:
 
@@ -90,36 +126,21 @@ ssh/.ssh/known_hosts
 dev/.config/zed/secrets.env
 ```
 
-## Zsh note (post-chezmoi cleanup)
-
-If still present, remove this line from zsh config:
-
-```zsh
-source <(chezmoi completion zsh)
-```
-
----
-
 ## Verification checklist
 
 ### A) Symlink health
 
 ```bash
-cd ~/dotfiles
-find shell terminal dev media gaming desktop browser local-bin ssh -type f | head
-```
-
-```bash
 ls -l ~/.bashrc ~/.zshenv ~/.config/zsh/.zshrc ~/.config/fish/config.fish
 ```
 
-Expected: files in `$HOME` should be symlinks into `~/dotfiles/...`.
+Expected: symlinks pointing into `~/dotfiles/...`.
 
-### B) Stow correctness
+### B) Stow consistency
 
 ```bash
 cd ~/dotfiles
-stow -nv -R -t "$HOME" shell terminal dev media gaming desktop browser local-bin ssh
+stow -nv -R -t "$HOME" */
 ```
 
 Expected: no unexpected conflicts.
@@ -132,36 +153,16 @@ zsh -lc 'echo $EDITOR'
 zsh -ic 'echo $EDITOR'
 ```
 
-Expected: `ZDOTDIR=$HOME/.config/zsh`; `EDITOR` available in both shell types.
-
-### D) Secret scanning
-
-Scan working tree:
+### D) Secret scan
 
 ```bash
 cd ~/dotfiles
 gitleaks dir . --redact --verbose
-```
-
-Scan staged changes:
-
-```bash
-cd ~/dotfiles
 git add -A
 gitleaks git --pre-commit --staged --redact --verbose
 ```
 
-Expected: no leaks.
-
-### E) Git hook path (repo-local)
-
-```bash
-git -C ~/dotfiles config --get core.hooksPath
-```
-
-Expected: `.githooks` (if configured).
-
-### F) SSH safety
+### E) SSH safety
 
 ```bash
 cd ~/dotfiles
