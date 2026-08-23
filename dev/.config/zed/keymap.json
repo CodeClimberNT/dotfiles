@@ -1,0 +1,38 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+  {
+    "context": "Editor && vim_mode == insert",
+    "bindings": {
+      // "j k": "vim::NormalBefore"
+    },
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "alt-shift-up": "editor::DuplicateLineUp",
+      "alt-shift-down": "editor::DuplicateLineDown",
+      "ctrl-alt-down": "editor::AddSelectionBelow",
+      "ctrl-alt-up": "editor::AddSelectionAbove",
+      "ctrl-alt-shift-up": "editor::AddSelectionAbove",
+      "ctrl-alt-shift-down": "editor::AddSelectionBelow"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      "ctrl-alt-i": "workspace::ToggleRightDock",
+      "ctrl-alt-b": "workspace::ToggleRightDock"
+    }
+  },
+  {
+    "unbind": {
+      "ctrl-alt-i": "dev::ToggleInspector"
+    }
+  }
+]

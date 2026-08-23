@@ -1,0 +1,5 @@
+exclude-newer = "1 week"
+
+[pip]
+# Ensure the pip interface respects the same "exclude newer" rule
+exclude-newer = "1 week"

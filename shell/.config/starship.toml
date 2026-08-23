@@ -1,0 +1,173 @@
+# ~/.config/starship.toml
+add_newline = false
+
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_state\
+$git_status\
+$cmd_duration\
+$memory_usage\
+$line_break\
+$nodejs\
+$rust\
+$python\
+$character"""
+
+[directory]
+  style = "blue"
+
+[character]
+  success_symbol = "[❯](purple)"
+  error_symbol   = "[❯](red)"
+  vimcmd_symbol  = "[❮](green)"
+
+[git_branch]
+  format = "[$symbol $branch(:$remote_branch) ]($style)"
+  symbol = ""
+  style  = "bright-black"
+
+[git_status]
+  format     = "[[(*$conflicted$untracked$modified$staged$renamed$deleted)](218) ($ahead_behind$stashed)]($style)"
+  style      = "cyan"
+  conflicted = ""
+  untracked  = ""
+  modified   = ""
+  staged     = ""
+  renamed    = ""
+  deleted    = ""
+  stashed    = "≡"
+
+[git_state]
+  format = '\([$state( $progress_current/$progress_total)]($style)\) '
+  style  = "bright-black"
+
+[cmd_duration]
+  format = "[$duration]($style) "
+  style  = "yellow"
+
+[memory_usage]
+  threshold = 40
+  format    = "$symbol[${ram}( | ${swap})]($style)"
+  style     = "bright-black"
+  disabled  = false
+
+[rust]
+  style  = "bright-black"
+  format = "[[$symbol($version)](fg:#769ff0)]($style)"
+
+[nodejs]
+  format = "[[$symbol($version)](fg:#769ff0)]($style)"
+  style  = "bright-black"
+
+[python]
+  format = "[[$symbol($version $virtualenv)](fg:#769ff0)]($style)"
+  style  = "bright-black"
+  # detect_extensions = []
+  #   detect_files      = []
+
+  # [os]
+  #   disabled = false
+  #   style    = "#000000"
+  #   format   = "[[$symbol](bg:#2E5991 fg:$style)]($style)"
+
+  # [username]
+  #   style_user  = "#000000"
+  #   style_root  = "#F7B63B"
+  #   show_always = true
+  #   format      = "[[$user](bg:#2E5991 fg:$style)]($style)"
+
+  # [battery]
+  #   full_symbol        = "🔋"
+  #   charging_symbol    = "🔌"
+  #   discharging_symbol = "⚡"
+  #   format             = "[[ $symbol$percentage ](bg:#2E5991 fg:#000000)](#000000)"
+
+  # [[battery.display]]
+  #     threshold = 10
+  #     style     = "bold red"
+
+  # [[battery.display]]
+  #     threshold = 30
+  #     style     = "bold yellow"
+
+  # [hostname]
+  #   ssh_only = true
+  #   # trim_at = "-" #to reduce hostname length, personally i prefer to have the full name available
+  #   style    = "#000000"
+  #   format   = "[[💻 $hostname ](bg:#254774 fg:$style)]($style)"
+  #   disabled = false
+
+  # [directory]
+  #   truncation_length = 5
+  #   style             = "fg:#e4e4e4 bg:#3465a4"
+  #   format            = "[📁 $path ]($style)[$lock_symbol]($style)"
+
+  # [directory.substitutions]
+  #     "Documents" = "󰈙 "
+  #     "Downloads" = " "
+  #     "Music"     = " "
+  #     "Pictures"  = " "
+
+  # [git_branch]
+  #   format = "[$symbol $branch(:$remote_branch) ]($style)"
+  #   symbol = ""
+  #   style  = "bg:#394260"
+
+  # [git_commit]
+  #   commit_hash_length = 8
+  #   format             = "[$tag]($style) "
+  #   style              = "bg:#394260"
+
+  # [git_metrics]
+  #   disabled      = false
+  #   added_style   = "bold green bg:#394260"
+  #   deleted_style = "bold red bg:#394260"
+  #   format        = "[([+$added]($added_style) )([-$deleted]($deleted_style))](bg:#394260)"
+
+  # [package]
+  #   disabled = true
+
+  # [julia]
+  #   style  = "bg:#1C3557"
+  #   format = "[[ $symbol ($version) ](fg:#769ff0 bg:#1C3557)]($style)"
+
+  # [python]
+  #   style  = "bg:#1C3557"
+  #   format = "[[ $symbol ($version) ](fg:#769ff0 bg:#1C3557)]($style)"
+
+  # [conda]
+  #   style  = "bg:#1C3557"
+  #   format = "[[ $symbol ($version) ](fg:#769ff0 bg:#1C3557)]($style)"
+
+  # [rust]
+  #   format = "[[ $symbol ($version) ](fg:#769ff0 bg:#1C3557)]($style)"
+  #   style  = "bg:#1C3557"
+
+  # [nodejs]
+  #   style  = "bg:#1C3557"
+  #   format = "[[ $symbol ($version) ](fg:#769ff0 bg:#1C3557)]($style)"
+
+  # [time]
+  #   time_format = "%T"
+  #   style       = "bg:#12233A"
+  #   format      = "[[$time](fg:#a0a9cb bg:#12233A) ]($style)"
+  #   disabled    = false
+
+  # [cmd_duration]
+  #   min_time = 1_500                                             # Show command duration over 1,500 milliseconds (=1 sec)
+  #   # min_time = 0 # always enabled
+  #   style    = "bg:#12233A"
+  #   format   = "[⌛ [$duration](fg:#a0a9cb bg:#12233A)]($style)"
+
+  # [memory_usage]
+  #   threshold = 40
+  #   style     = "bg:#12233A"
+  #   format    = "[ $symbol[${ram}( | ${swap})](fg:#a0a9cb bg:#12233A)]($style)"
+  #   disabled  = false
+
+  # [character]
+  #   success_symbol = "[❯](#4A8FE8)"
+  #   error_symbol   = "[✗](bold red)"

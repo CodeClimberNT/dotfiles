@@ -1,0 +1,5 @@
+ssh/.ssh/id_ed25519
+ssh/.ssh/*.pem
+**.env
+# Remove this when https://github.com/zed-industries/zed/discussions/26043 is resolved.
+dev/.config/zed/settings.json

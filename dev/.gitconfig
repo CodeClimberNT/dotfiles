@@ -1,0 +1,12 @@
+[user]
+	name = CodeClimberNT
+	email = 59546514+CodeClimberNT@users.noreply.github.com
+[core]
+	autocrlf = input
+[init]
+	defaultBranch = main
+[credential]
+	helper = libsecret
+[alias]
+    spull = "!f() { git fetch --depth=1 origin && git reset --hard origin/HEAD && git clean -fd; }; f"
+    sclone = "!f() { git clone --depth=1 \"$1\"; }; f"
