@@ -2,6 +2,9 @@
 
 Personal dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
+>[!IMPORTANT]
+> Clone this repo with `--recurse-submodules` to ensure submodules are initialized.
+
 ## Structure
 
 Packages are grouped by purpose:
@@ -15,6 +18,7 @@ Packages are grouped by purpose:
 - `browser` → browser flags/config
 - `local-bin` → scripts for `~/.local/bin`
 - `ssh` → SSH config and public key only (no private key)
+- `external` → submodules for external repos (e.g., `nvim`, `starship`, `espanso`)
 
 ## Prerequisites
 
@@ -39,15 +43,25 @@ cd ~/dotfiles
 
 ### Option A: explicit package list
 
+Preview stow operations (no changes made):
 ```bash
-stow -nv -t "$HOME" shell terminal dev media gaming desktop browser local-bin ssh
-stow -v  -t "$HOME" shell terminal dev media gaming desktop browser local-bin ssh
+stow -nv -t "$HOME" shell terminal dev media gaming desktop browser local-bin ssh external
+```
+
+Apply stow operations (symlinks created):
+```bash
+stow -v  -t "$HOME" shell terminal dev media gaming desktop browser local-bin ssh external
 ```
 
 ### Option B: stow all packages automatically (alternative)
 
+Preview with `-n` (no changes made):
 ```bash
 stow -nv -t "$HOME" */
+```
+
+Apply with `-v` (symlinks created):
+```bash
 stow -v  -t "$HOME" */
 ```
 
@@ -63,6 +77,51 @@ Then review:
 ```bash
 git status
 git diff
+```
+## External configuration repositories
+
+External repositories are tracked as Git submodules under `external/.config`:
+
+```text
+external/.config/
+├── nvim/
+├── espanso/
+└── starship/
+    └── starship.toml
+```
+
+Initialize them when cloning:
+
+```bash
+git clone --recurse-submodules git@github.com:CodeClimberNT/dotfiles.git
+cd dotfiles
+```
+
+For an existing clone:
+
+```bash
+git submodule update --init --recursive
+```
+
+Preview the changes first:
+
+```bash
+stow -nv -t "$HOME" external
+```
+
+Install all external configurations with Stow:
+
+```bash
+stow -v -t "$HOME" external
+```
+
+
+This creates:
+
+```text
+~/.config/nvim/
+~/.config/espanso/
+~/.config/starship/starship.toml
 ```
 
 ## Daily usage
