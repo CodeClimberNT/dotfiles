@@ -18,7 +18,7 @@
     "C4",            # Flake8-comprehensions - best practices in comprehensions
     "C90",           # McCabe - complexity metric for functions
     "COM",           # Flake8-commas - trailing/comma issues
-    "CPY",           # Flake8-copyright - copyright header checks
+    # "CPY",           # Flake8-copyright - copyright header checks
     "D",             # Pydocstyle - docstring formatting
     "DJ",            # Flake8-django - Django-specific conventions
     "DOC",           # Pydoclint - docstring linting and consistency

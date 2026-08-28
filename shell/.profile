@@ -2,6 +2,10 @@
 
 # Cargo (Rust toolchain)
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+
+# Go general environment setup
+[ -f "$HOME/.go/env" ] && . "$HOME/.go/env"
+
 # use this when zed will allow secrets from env files
 # [ -f "$HOME/.config/zed/secrets.env" ] && . "$HOME/.config/zed/secrets.env"
 

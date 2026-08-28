@@ -1,0 +1,19 @@
+# Go environment setup
+
+# Set GOPATH to $HOME/go
+export GOPATH="${GOPATH:-$HOME/go}"
+
+# Prepend $GOPATH/bin to PATH if not already present
+case ":${PATH}:" in
+    *:"$GOPATH/bin":*)
+        ;;
+    *)
+        export PATH="$GOPATH/bin:$PATH"
+        ;;
+esac
+
+# Build behavior: Uncomment to force pure Go static builds (no C library dependencies)
+# export CGO_ENABLED=0
+
+# Privacy: Prevent internal/private repo names from leaking to Go's public proxy
+# export GOPRIVATE="github.com/my-org/*,gitlab.com/company/*"
