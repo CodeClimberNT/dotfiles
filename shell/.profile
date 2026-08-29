@@ -1,11 +1,5 @@
 # ~/.profile
 
-# Cargo (Rust toolchain)
-[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
-
-# Go general environment setup
-[ -f "$HOME/.go/env" ] && . "$HOME/.go/env"
-
 # use this when zed will allow secrets from env files
 # [ -f "$HOME/.config/zed/secrets.env" ] && . "$HOME/.config/zed/secrets.env"
 
@@ -41,8 +35,10 @@ export LESS_TERMCAP_us=$'\e[1;32m'
 export LESS_TERMCAP_ue=$'\e[0m'
 
 # dev paths
-export DOTNET_ROOT=/usr/share/dotnet
-export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+[ -f "$HOME/.go/env" ] && . "$HOME/.go/env"
+[ -f "$HOME/.dotnet/env" ] && . "$HOME/.dotnet/env"
+
 export PATH="$HOME/.lmstudio/bin:$PATH"
 
 # Keep this LAST (as explicitly said in the texlive installation guide)

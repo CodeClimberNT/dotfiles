@@ -3,7 +3,7 @@
 Personal dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
 >[!IMPORTANT]
-> Clone this repo with `--recurse-submodules` to ensure submodules are initialized.
+> Clone this repo with `git clone --recurse-submodules` to ensure submodules are also cloned. See [External configuration repositories](#external-configuration-repositories) for details.
 
 ## Structure
 
@@ -18,7 +18,6 @@ Packages are grouped by purpose:
 - `browser` → browser flags/config
 - `local-bin` → scripts for `~/.local/bin`
 - `ssh` → SSH config and public key only (no private key)
-- `external` → submodules for external repos (e.g., `nvim`, `starship`, `espanso`)
 
 ## Prerequisites
 
@@ -45,12 +44,12 @@ cd ~/dotfiles
 
 Preview stow operations (no changes made):
 ```bash
-stow -nv -t "$HOME" shell terminal dev media gaming desktop browser local-bin ssh external
+stow -nv -t "$HOME" shell terminal dev media gaming desktop browser local-bin ssh
 ```
 
 Apply stow operations (symlinks created):
 ```bash
-stow -v  -t "$HOME" shell terminal dev media gaming desktop browser local-bin ssh external
+stow -v  -t "$HOME" shell terminal dev media gaming desktop browser local-bin ssh
 ```
 
 ### Option B: stow all packages automatically (alternative)
@@ -80,22 +79,7 @@ git diff
 ```
 ## External configuration repositories
 
-External repositories are tracked as Git submodules under `external/.config`:
-
-```text
-external/.config/
-├── nvim/
-├── espanso/
-└── starship/
-    └── starship.toml
-```
-
-Initialize them when cloning:
-
-```bash
-git clone --recurse-submodules git@github.com:CodeClimberNT/dotfiles.git
-cd dotfiles
-```
+External repositories are tracked as Git submodules under the specific package folder. This allows for separate version control and easier updates.:
 
 For an existing clone:
 
@@ -103,25 +87,30 @@ For an existing clone:
 git submodule update --init --recursive
 ```
 
+To check the status of submodules:
+
+```bash
+git submodule status --recursive
+```
+
 Preview the changes first:
 
 ```bash
-stow -nv -t "$HOME" external
+stow -nv -t "$HOME" <package>
 ```
 
-Install all external configurations with Stow:
-
+Then apply:
 ```bash
-stow -v -t "$HOME" external
+stow -v -t "$HOME" <package>
 ```
 
-
-This creates:
+This creates (or updates) symlinks in `$HOME` pointing to the submodule files.
+If stowing packages dev and desktop, the following files will be symlinked:
 
 ```text
 ~/.config/nvim/
+~/.config/ruff/ruff.toml
 ~/.config/espanso/
-~/.config/starship/starship.toml
 ```
 
 ## Daily usage
@@ -137,7 +126,7 @@ Unstow one package:
 
 ```bash
 cd ~/dotfiles
-stow -D -t "$HOME" shell
+stow -D -t "$HOME" <package>
 ```
 
 ## Editing rules (important)
@@ -170,6 +159,18 @@ cd ~/dotfiles
 stow -D -t "$HOME" old-package
 stow -R -t "$HOME" old-package new-package
 stow -nv -R -t "$HOME" */
+```
+
+### Moving Submodules (optional safer flow)
+
+```bash
+cd ~/dotfiles
+# 1) move submodule folder to new package folder
+git mv old-package/submodule new-package/submodule
+# 2) verify what will be unstowed and restowed
+stow -nv -R -t "$HOME" */
+# 3) apply the changes
+stow -R -t "$HOME" */
 ```
 
 ## Secrets policy

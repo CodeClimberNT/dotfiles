@@ -1,0 +1,23 @@
+#!/bin/sh
+# .NET environment setup
+
+# Set DOTNET_ROOT to $HOME/.dotnet
+export DOTNET_ROOT="${DOTNET_ROOT:-$HOME/.dotnet}"
+
+# Prepend $DOTNET_ROOT to PATH if not already present
+case ":${PATH}:" in
+    *:"$DOTNET_ROOT":*)
+        ;;
+    *)
+        export PATH="$PATH:$DOTNET_ROOT"
+        ;;
+esac
+
+# Prepend $DOTNET_ROOT/tools to PATH if not already present
+case ":${PATH}:" in
+    *:"$DOTNET_ROOT/tools":*)
+        ;;
+    *)
+        export PATH="$PATH:$DOTNET_ROOT/tools"
+        ;;
+esac

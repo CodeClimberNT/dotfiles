@@ -1,12 +1,15 @@
-[submodule "external/.config/nvim"]
+[submodule "dev/.config/nvim"]
 	path = dev/.config/nvim
 	url = git@github.com:CodeClimberNT/nvim.git
-[submodule "external/.config/starship"]
-	path = shell/.config/starship
-	url = git@github.com:CodeClimberNT/starship.git
-[submodule "external/.config/espanso"]
-	path = desktop/.config/espanso
-	url = git@github.com:CodeClimberNT/espanso.git
 [submodule "dev/.config/ruff"]
 	path = dev/.config/ruff
 	url = git@github.com:CodeClimberNT/ruff.git
+[submodule "shell/.config/starship"]
+	path = shell/.config/starship
+	url = git@github.com:CodeClimberNT/starship.git
+[submodule "desktop/.config/espanso"]
+	path = desktop/.config/espanso
+	url = git@github.com:CodeClimberNT/espanso.git
+[submodule "dev/.config/emacs"]
+	path = dev/.config/emacs
+	url = git@github.com:CodeClimberNT/emacs.git
