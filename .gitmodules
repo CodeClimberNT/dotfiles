@@ -7,3 +7,6 @@
 [submodule "external/.config/espanso"]
 	path = desktop/.config/espanso
 	url = git@github.com:CodeClimberNT/espanso.git
+[submodule "dev/.config/ruff"]
+	path = dev/.config/ruff
+	url = git@github.com:CodeClimberNT/ruff.git
