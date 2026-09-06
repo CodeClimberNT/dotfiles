@@ -2,23 +2,6 @@
 
 Personal dotfiles managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
->[!IMPORTANT]
-> Clone this repo with `git clone --recurse-submodules` to ensure submodules are also cloned. See [External configuration repositories](#external-configuration-repositories) for details.
-
-## Structure
-
-Packages are grouped by purpose:
-
-- `shell` → bash, zsh, fish, shared shell config
-- `terminal` → kitty, alacritty, konsole-related config
-- `dev` → developer tooling (`ruff`, `tombi`, `uv`, `zed`, etc.)
-- `media` → `easyeffects`, `mpv`, `obs-studio`
-- `gaming` → `heroic`, `MangoHud`
-- `desktop` → desktop/session config
-- `browser` → browser flags/config
-- `local-bin` → scripts for `~/.local/bin`
-- `ssh` → SSH config and public key only (no private key)
-
 ## Prerequisites
 
 - Linux
@@ -32,152 +15,112 @@ Install on Arch/CachyOS:
 sudo pacman -S stow git gitleaks
 ```
 
-## First-time setup
-
-From repo root:
+## Quick start
 
 ```bash
+git clone --recurse-submodules --config core.hooksPath=.githooks git@github.com:CodeClimberNT/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ```
 
-### Option A: explicit package list
+> [!IMPORTANT]
+> This repo requires two flags on clone:
+>
+> - **`--recurse-submodules`** — several packages embed external config repos as submodules (see [Packages](#packages)). Without this flag, those folders clone empty.
+>   **Already cloned without it?** Run `git submodule update --init --recursive`.
+> 
+> - **`--config core.hooksPath=.githooks`** — points git at this repo's versioned hooks (e.g. the gitleaks pre-commit check). `.git/config` is never tracked, so this must be set on every fresh clone.
+>   **Already cloned without it?** Run `git config core.hooksPath .githooks` inside the repo.
 
-Preview stow operations (no changes made):
-```bash
-stow -nv -t "$HOME" shell terminal dev media gaming desktop browser local-bin ssh
-```
+Preview what will be linked (no changes made):
 
-Apply stow operations (symlinks created):
-```bash
-stow -v  -t "$HOME" shell terminal dev media gaming desktop browser local-bin ssh
-```
-
-### Option B: stow all packages automatically (alternative)
-
-Preview with `-n` (no changes made):
 ```bash
 stow -nv -t "$HOME" */
 ```
 
-Apply with `-v` (symlinks created):
+Apply:
+
 ```bash
-stow -v  -t "$HOME" */
+stow -v -t "$HOME" */
 ```
 
-If conflicts exist (existing real files in `$HOME`), use one-time adopt:
+If stow reports conflicts (real files already exist in `$HOME` where a symlink should go), resolve once with `--adopt`, which moves the existing file into the repo and replaces it with a symlink — **review the diff after**, since this pulls machine-local content into the repo:
 
 ```bash
 stow -nv --adopt -t "$HOME" */
 stow -v  --adopt -t "$HOME" */
-```
-
-Then review:
-
-```bash
 git status
 git diff
 ```
-## External configuration repositories
 
-External repositories are tracked as Git submodules under the specific package folder. This allows for separate version control and easier updates.:
+## Packages
 
-For an existing clone:
+| Package     | Contains                                                                                                   | Submodules        |
+| ----------- | ---------------------------------------------------------------------------------------------------------- | ----------------- |
+| `shell`     | bash, fish, **starship**, zsh, shared shell config                                                         | starship          |
+| `terminal`  | kitty, alacritty, konsole                                                                                  | —­                |
+| `dev`       | **emacs**, **nvim**, **ruff**, tombi, uv, VS Code (default profile: settings, keybindings, snippets), zed, | emacs, nvim, ruff |
+| `media`     | easyeffects, mpv, obs-studio                                                                               | —                 |
+| `gaming`    | heroic, MangoHud                                                                                           | —                 |
+| `desktop`   | desktop/session config, **espanso**                                                                        | espanso           |
+| `browser`   | browser flags/config                                                                                       | —                 |
+| `local-bin` | scripts for `~/.local/bin`                                                                                 | —                 |
+| `ssh`       | SSH config + public key only (no private key)                                                              | —                 |
+
+
+## Daily usage
+
+**Content edits** (editing values inside an existing file): edit either in `$HOME` or in `~/dotfiles` — they're the same file via symlink.
+
+**Structure edits** (add/move/rename/delete a file or folder): always edit inside `~/dotfiles` first, then restow. Editing structure directly in `$HOME` can leave broken or unexpected symlinks.
+
+Restow after any structure change:
 
 ```bash
-git submodule update --init --recursive
+cd ~/dotfiles
+stow -R -t "$HOME" */
+stow -nv -R -t "$HOME" */   # verify: expect no conflicts
+git status
 ```
 
-To check the status of submodules:
+Unstow a single package:
+
+```bash
+stow -D -t "$HOME" <package>
+```
+
+### Moving files between packages
+
+```bash
+cd ~/dotfiles
+stow -D -t "$HOME" old-package
+git mv old-package/path/to/file new-package/path/to/file
+stow -nv -R -t "$HOME" */
+stow -R -t "$HOME" */
+```
+
+### Adding or moving a submodule
+
+```bash
+cd ~/dotfiles
+git submodule add <url> <package>/path/to/submodule   # adding
+# or
+git mv old-package/submodule new-package/submodule     # moving
+
+stow -nv -R -t "$HOME" */   # preview
+stow -R -t "$HOME" */       # apply
+```
+
+Update the **Packages** table above whenever this changes what a package contains.
+
+Check submodule state any time:
 
 ```bash
 git submodule status --recursive
 ```
 
-Preview the changes first:
-
-```bash
-stow -nv -t "$HOME" <package>
-```
-
-Then apply:
-```bash
-stow -v -t "$HOME" <package>
-```
-
-This creates (or updates) symlinks in `$HOME` pointing to the submodule files.
-If stowing packages dev and desktop, the following files will be symlinked:
-
-```text
-~/.config/nvim/
-~/.config/ruff/ruff.toml
-~/.config/espanso/
-```
-
-## Daily usage
-
-Restow after structure changes (new/moved/renamed files):
-
-```bash
-cd ~/dotfiles
-stow -R -t "$HOME" */
-```
-
-Unstow one package:
-
-```bash
-cd ~/dotfiles
-stow -D -t "$HOME" <package>
-```
-
-## Editing rules (important)
-
-- **Content edits** (inside existing files): edit either in `$HOME` or in `~/dotfiles` (symlinked).
-- **Structure edits** (add/move/rename/delete files or folders): edit in **`~/dotfiles` first**, then restow.
-
-Why: structure changes made directly in `$HOME` can break expected symlink layout.
-
-### Safe workflow for structure changes
-
-```bash
-cd ~/dotfiles
-
-# 1) move/create/delete inside package folders first
-#    (example: mv dev/.config/ruff media/.config/ruff)
-
-# 2) restow all packages
-stow -R -t "$HOME" */
-
-# 3) verify
-stow -nv -R -t "$HOME" */
-git status
-```
-
-### Moving files between packages (optional safer flow)
-
-```bash
-cd ~/dotfiles
-stow -D -t "$HOME" old-package
-stow -R -t "$HOME" old-package new-package
-stow -nv -R -t "$HOME" */
-```
-
-### Moving Submodules (optional safer flow)
-
-```bash
-cd ~/dotfiles
-# 1) move submodule folder to new package folder
-git mv old-package/submodule new-package/submodule
-# 2) verify what will be unstowed and restowed
-stow -nv -R -t "$HOME" */
-# 3) apply the changes
-stow -R -t "$HOME" */
-```
-
 ## Secrets policy
 
-Never commit private keys or tokens.
-
-Suggested `.gitignore` entries:
+Never commit private keys or tokens. Enforced `.gitignore` entries:
 
 ```gitignore
 ssh/.ssh/id_ed25519
@@ -186,26 +129,34 @@ ssh/.ssh/known_hosts
 dev/.config/zed/secrets.env
 ```
 
-## Verification checklist
+Scan before every commit:
 
-### A) Symlink health
+```bash
+cd ~/dotfiles
+git add -A
+gitleaks git --pre-commit --staged --redact --verbose
+```
+
+---
+
+## Troubleshooting / Verification
+
+**Symlinks not pointing where expected**
 
 ```bash
 ls -l ~/.bashrc ~/.zshenv ~/.config/zsh/.zshrc ~/.config/fish/config.fish
 ```
+Expected: each resolves into `~/dotfiles/...`. If not, restow the owning package.
 
-Expected: symlinks pointing into `~/dotfiles/...`.
-
-### B) Stow consistency
+**Not sure if stow state matches the repo**
 
 ```bash
 cd ~/dotfiles
 stow -nv -R -t "$HOME" */
 ```
+Expected: no unexpected conflicts. Anything listed here is out of sync.
 
-Expected: no unexpected conflicts.
-
-### C) Shell env correctness
+**Shell env looks wrong**
 
 ```bash
 echo "$ZDOTDIR"
@@ -213,20 +164,33 @@ zsh -lc 'echo $EDITOR'
 zsh -ic 'echo $EDITOR'
 ```
 
-### D) Secret scan
+**Dangling symlinks after removing something from a package**
+
+Stow won't clean these up on its own if you delete a file from the repo without unstowing first:
+
+```bash
+find -L ~ -maxdepth 4 -xtype l 2>/dev/null
+```
+Any hit pointing back into `~/dotfiles` for a path you removed can be deleted manually.
+
+**Submodule out of date or empty after a fresh clone/pull**
+
+```bash
+git submodule update --init --recursive
+git submodule status --recursive
+```
+
+**Confirming no SSH private key material is tracked**
+
+```bash
+cd ~/dotfiles
+git ls-files | grep -E 'id_ed25519$|\.pem$|known_hosts$' || true
+```
+Expected: no output.
+
+**Final secret sweep**
 
 ```bash
 cd ~/dotfiles
 gitleaks dir . --redact --verbose
-git add -A
-gitleaks git --pre-commit --staged --redact --verbose
 ```
-
-### E) SSH safety
-
-```bash
-cd ~/dotfiles
-git ls-files | grep -E 'id_ed25519|\.pem|known_hosts' || true
-```
-
-Expected: no private key material tracked.
