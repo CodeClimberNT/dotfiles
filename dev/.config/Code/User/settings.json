@@ -4,7 +4,7 @@
   "editor.cursorSmoothCaretAnimation": "on",
   "editor.guides.bracketPairs": true,
   "editor.fontLigatures": true,
-  "editor.fontFamily": "JetBrainsMono Nerd Font, FiraCode Nerd Font, monospace",
+  "editor.fontFamily": "CaskaydiaCove Nerd Font Mono, JetBrainsMono Nerd Font, FiraCode Nerd Font, monospace",
   "editor.stickyScroll.enabled": true,
   "editor.linkedEditing": true,
   "editor.minimap.showSlider": "always",
@@ -18,10 +18,12 @@
   "git.confirmSync": false,
   "git.enableSmartCommit": true,
   "projectManager.git.baseFolders": [
-    "~/code"
+    "~/code",
+    "~/dev",
+    "~/dotfiles"
   ],
   "security.workspace.trust.enabled": false,
-  "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font, FiraCode Nerd Font Mono",
+  "terminal.integrated.fontFamily": "CaskaydiaCove Nerd Font Mono, JetBrainsMono Nerd Font, FiraCode Nerd Font Mono",
   "remote.SSH.remotePlatform": {
     "192.168.1.26": "linux"
   },
@@ -48,10 +50,6 @@
     "editor.wordSeparators",
     "editor.wrappingIndent",
     "todo-tree.filtering.excludeGlobs",
-    "evenBetterToml.formatter.allowedBlankLines",
-    "evenBetterToml.formatter.indentTables",
-    "evenBetterToml.formatter.alignComments",
-    "evenBetterToml.formatter.indentEntries",
     "explorer.compactFolders",
     "editor.fontFamily",
     "editor.mouseWheelZoom",
@@ -254,10 +252,6 @@
   "[markdown]": {
     "editor.defaultFormatter": "yzhang.markdown-all-in-one"
   },
-  "evenBetterToml.formatter.allowedBlankLines": 2,
-  "evenBetterToml.formatter.indentTables": true,
-  "evenBetterToml.formatter.alignComments": true,
-  "evenBetterToml.formatter.indentEntries": true,
   "window.customTitleBarVisibility": "auto",
   "workbench.colorTheme": "Bluloco Dark",
   "editor.cursorBlinking": "phase",
@@ -265,9 +259,6 @@
   "notebook.lineNumbers": "on",
   "window.commandCenter": false,
   "window.newWindowProfile": "Default",
-  "[kotlin]": {
-    "editor.defaultFormatter": "fwcd.kotlin"
-  },
   "editor.formatOnSave": true,
   "redhat.telemetry.enabled": false,
   "github.copilot.nextEditSuggestions.enabled": true,
@@ -280,18 +271,12 @@
     "*.copilotmd": "vscode.markdown.preview.editor",
     "{git,gitlens,chat-editing-snapshot-text-model,copilot,git-graph,git-graph-3}:/**/*.qrc": "default",
     "{git,gitlens,chat-editing-snapshot-text-model,copilot,git-graph,git-graph-3}:/**/*.ui": "default",
-    "*.qrc": "qt-core.qrcEditor"
   },
-  "qt-core.additionalQtPaths": [
-    {
-      "name": "Qt-5.15.18-linux-g++_from_PATH",
-      "path": "/usr/bin/qmake"
-    }
-  ],
   "gitProjectManager.baseProjectsFolders": [
+    "~/code",
+    "~/dev",
     "~/Programming"
   ],
-  "window.commandCenter": false,
   "yaml.schemas": {
     "file:///home/nick/.vscode/extensions/continue.continue-1.2.22-linux-x64/config-yaml-schema.json": [
       ".continue/**/*.yaml"

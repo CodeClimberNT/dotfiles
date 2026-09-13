@@ -1,7 +1,7 @@
 [extend]
-useDefault = true
+  useDefault = true
 
 [allowlist]
-paths = [
-  '''dev/\.config/Code/User/keybindings\.json''',
-]
+  paths = [
+    '''dev/\.config/Code/User/keybindings\.json''',
+  ]
