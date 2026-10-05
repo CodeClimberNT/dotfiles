@@ -1,10 +1,42 @@
+# ---------------------------------------------------------
+# Python
+# ---------------------------------------------------------
+
+# Automatically download Python versions when necessary.
+python-downloads = "automatic"
+
+# ---------------------------------------------------------
+# Performance
+# ---------------------------------------------------------
+
+concurrent-downloads = 16
+concurrent-builds    = 4
+concurrent-installs  = 4
+
+# ---------------------------------------------------------
+# General behavior
+# ---------------------------------------------------------
+
+# Compile Python files during installation.
+compile-bytecode = true
+
+# ---------------------------------------------------------
+# PIP configuration
+# ---------------------------------------------------------
+
 exclude-newer = "1 week"
 
 [pip]
   # Ensure the pip interface respects the same "exclude newer" rule
   exclude-newer = "1 week"
 
+# ---------------------------------------------------------
+# Package indexes
+# ---------------------------------------------------------
+#
+# Make PyPI the normal/default package index.
+#
 [[index]]
-  name     = "pytorch-cu130"
-  url      = "https://download.pytorch.org/whl/cu130"
-  explicit = false
+  name    = "pypi"
+  url     = "https://pypi.org/simple"
+  default = true
