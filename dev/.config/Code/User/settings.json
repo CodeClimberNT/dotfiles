@@ -50,6 +50,10 @@
     "editor.wordSeparators",
     "editor.wrappingIndent",
     "todo-tree.filtering.excludeGlobs",
+    "evenBetterToml.formatter.allowedBlankLines",
+    "evenBetterToml.formatter.indentTables",
+    "evenBetterToml.formatter.alignComments",
+    "evenBetterToml.formatter.indentEntries",
     "explorer.compactFolders",
     "editor.fontFamily",
     "editor.mouseWheelZoom",
@@ -252,6 +256,10 @@
   "[markdown]": {
     "editor.defaultFormatter": "yzhang.markdown-all-in-one"
   },
+  "evenBetterToml.formatter.allowedBlankLines": 2,
+  "evenBetterToml.formatter.indentTables": true,
+  "evenBetterToml.formatter.alignComments": true,
+  "evenBetterToml.formatter.indentEntries": true,
   "window.customTitleBarVisibility": "auto",
   "workbench.colorTheme": "Bluloco Dark",
   "editor.cursorBlinking": "phase",
@@ -259,6 +267,9 @@
   "notebook.lineNumbers": "on",
   "window.commandCenter": false,
   "window.newWindowProfile": "Default",
+  "[kotlin]": {
+    "editor.defaultFormatter": "fwcd.kotlin"
+  },
   "editor.formatOnSave": true,
   "redhat.telemetry.enabled": false,
   "github.copilot.nextEditSuggestions.enabled": true,
@@ -271,6 +282,7 @@
     "*.copilotmd": "vscode.markdown.preview.editor",
     "{git,gitlens,chat-editing-snapshot-text-model,copilot,git-graph,git-graph-3}:/**/*.qrc": "default",
     "{git,gitlens,chat-editing-snapshot-text-model,copilot,git-graph,git-graph-3}:/**/*.ui": "default",
+    "*.qrc": "qt-core.qrcEditor"
   },
   "gitProjectManager.baseProjectsFolders": [
     "~/code",
