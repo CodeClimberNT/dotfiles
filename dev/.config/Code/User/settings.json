@@ -251,7 +251,8 @@
   "editor.wordSeparators": "`~!@#$%^&*()=+[{]}\\|;:'\",.<>/?",
   "todo-tree.filtering.excludeGlobs": [
     "**/node_modules/*/**",
-    "**/.venv/*/**"
+    "**/.venv/*/**",
+    "**/.cache/*/**"
   ],
   "[markdown]": {
     "editor.defaultFormatter": "yzhang.markdown-all-in-one"

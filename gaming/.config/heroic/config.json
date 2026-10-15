@@ -4,14 +4,14 @@
     "checkUpdatesInterval": 10,
     "enableUpdates": false,
     "addDesktopShortcuts": false,
-    "addStartMenuShortcuts": false,
+    "addStartMenuShortcuts": true,
     "autoInstallDxvk": true,
     "autoInstallVkd3d": true,
     "autoInstallDxvkNvapi": true,
-    "addSteamShortcuts": false,
+    "addSteamShortcuts": true,
     "preferSystemLibs": false,
     "checkForUpdatesOnStartup": true,
-    "autoUpdateGames": false,
+    "autoUpdateGames": true,
     "customWinePaths": [],
     "defaultInstallPath": "/home/nick/Games/Heroic",
     "libraryTopSection": "disabled",
@@ -63,10 +63,12 @@
     "advertiseAvxForRosetta": false,
     "noTrayIcon": false,
     "showValveProton": false,
-    "steamGridDbApiKey": "",
+    "steamGridDbApiKey": "sgdb:v1:djExa/QMHnO2MVLam4JbGLZVDIS1cPchial6HeGBuS4n/xVtDPqIx/3+2yKgmSsfoLCL",
     "disableGOGPresence": false,
     "darkTrayIcon": false,
-    "discordRPC": true
+    "discordRPC": true,
+    "exitToTray": true,
+    "altLegendaryBin": ""
   },
   "version": "v0"
 }
