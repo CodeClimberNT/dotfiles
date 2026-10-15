@@ -281,9 +281,7 @@
   "editor.renderWhitespace": "all",
   "workbench.editorAssociations": {
     "*.copilotmd": "vscode.markdown.preview.editor",
-    "{git,gitlens,chat-editing-snapshot-text-model,copilot,git-graph,git-graph-3}:/**/*.qrc": "default",
     "{git,gitlens,chat-editing-snapshot-text-model,copilot,git-graph,git-graph-3}:/**/*.ui": "default",
-    "*.qrc": "qt-core.qrcEditor"
   },
   "gitProjectManager.baseProjectsFolders": [
     "~/code",
